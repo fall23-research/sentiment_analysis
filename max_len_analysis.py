@@ -1,8 +1,16 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
+import sqlite3
+database = sqlite3.connect("/Users/siwon/Desktop/Fall-23/research/official_news_dataset/news_comment.sqlite")
+databaseCursor = database.cursor()
+
+databaseCursor.execute('''SELECT LENGTH(text_display) AS text_length FROM news_comment''')
+rows = databaseCursor.fetchall()
+length_comments = [row[0] for row in rows]
+
 # 코멘트 길이 데이터 (예: [10, 20, 30, 40, 50])
-comment_lengths = np.array([10, 20, 30, 40, 50])
+comment_lengths = np.array(length_comments)
 
 # 정렬
 sorted_lengths = np.sort(comment_lengths)
@@ -26,4 +34,15 @@ desired_length = sorted_lengths[index]
 
 print(f"95% 이상을 커버하는 max length: {desired_length}")
 
+print('리뷰의 최대 길이 :', sorted_lengths[-1])
+print('리뷰의 평균 길이 :', np.mean(length_comments))
+plt.hist(length_comments, bins=10, range=(0, 200))
+plt.xlabel('Length of Comment')
+plt.ylabel('Frequency')
+plt.title('Comment Length Distribution (0-200)')
+plt.grid(True)
 plt.show()
+
+# 95% 이상을 커버하는 max length: 138
+# 리뷰의 최대 길이 : 6953
+# 리뷰의 평균 길이 : 49.663236238695795
