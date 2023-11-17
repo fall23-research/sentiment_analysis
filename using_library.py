@@ -26,7 +26,7 @@ def main():
     mpck = MPCK()
 
     # Iterate through the retrieved data and update the specified table
-    for comment_id, text_display in comments[420549:]:
+    for comment_id, text_display in comments[440431:]:
         # Process the data
         tokens = mpck.tokenize(text_display)
         ngrams = mpck.ngramize(tokens)
